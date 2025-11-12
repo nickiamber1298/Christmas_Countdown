@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Countdown to Christmas Eve</title>
+  <link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=Great+Vibes&family=Mea+Culpa&family=Rye&display=swap" rel="stylesheet">
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      display: grid;
+      place-items: center;
+      background: url("fireplace.png") center / cover no-repeat;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: #0b1b0f;
+    }
+
+    body::after {
+      content: "";
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.10);
+      pointer-events: none;
+    }
+
+    /* 🎁 Clean white card */
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 24px 28px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      border: 0px solid #cfe7cf;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+   .title {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  margin-bottom: 20px; /* ↓ smaller space below title */
+  transform: skew(-5deg);
+  font-weight: 500;
+  color: #166534;
+  letter-spacing: .02em;
+}
+
+.countdown {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0; /* remove default block spacing */
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #b91c1c;
+  line-height: 0.8; /* ↓ tighten spacing between number and label */
+}
+
+.countdown .num {
+  font-size: 6rem; /* ↓ slightly smaller */
+  font-weight: 400;
+  color: #b91c1c;
+  display: block;
+  font-family: 'Rye';
+  margin-bottom: 0.3em; /* ↓ minimal gap before label */
+}
+
+.countdown .label {
+  display: block;
+  margin-top: 0; /* ↓ removed margin */
+  color: #166534;
+  font-family: 'Corinthia', cursive;
+  font-size: 2.6rem; /* ↓ slightly smaller for balance */
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+
+
+  </style>
+</head>
+<body>
+  <div class="card" role="group" aria-label="Countdown to Christmas Eve">
+    <div class="title">
+      </span>
+      --- The holidays are coming ---
+      </span>
+    </div>
+
+    <div class="countdown" aria-live="polite">
+      <span id="days" class="num">0</span>
+      <span class="label">Days until Christmas </span>
+    </div>
+
+
+  <script>
+    function nextChristmasEve() {
+      const now = new Date();
+      const year = now.getFullYear();
+      let target = new Date(year, 11, 24, 0, 0, 0, 0);
+      if (now >= target) target = new Date(year + 1, 11, 24, 0, 0, 0, 0);
+      return target;
+    }
+
+    
+    const daysEl = document.getElementById('days');
+    let target = nextChristmasEve();
+
+
+    function tick() {
+      const now = new Date();
+      if (now >= target) target = nextChristmasEve();
+      const diff = target - now;
+      const totalSeconds = Math.max(0, Math.floor(diff / 1000));
+      const days = Math.floor(totalSeconds / (24 * 3600));
+      daysEl.textContent = days;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
